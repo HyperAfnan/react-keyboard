@@ -1,6 +1,6 @@
-import { Keyboard } from './components/keyboard/Keyboard';
-import { SettingsPanel } from './components/settings/SettingsPanel';
-import { useKeyboardStore } from './store/keyboardStore';
+import { Keyboard } from "./components/keyboard/Keyboard";
+import { SettingsPanel } from "./components/settings/SettingsPanel";
+import { useKeyboardStore } from "./store/keyboardStore";
 
 function App() {
   const toggleSettings = useKeyboardStore((s) => s.toggleSettings);
@@ -11,79 +11,82 @@ function App() {
 
   return (
     <div
-      className={`accent-${accent}`}
-      style={{
-        minHeight: '100vh',
-        background: 'radial-gradient(ellipse at 50% 30%, #1a1a22 0%, #0a0a0c 70%)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '20px',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      className={`accent-${accent} relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_50%_30%,_#1a1a22_0%,_#0a0a0c_70%)] p-5`}
     >
       <div
         aria-hidden="true"
+        className=""
         style={{
-          position: 'absolute',
-          top: '20%',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          position: "absolute",
+          top: "20%",
+          left: "50%",
+          transform: "translateX(-50%)",
           width: 600,
           height: 200,
-          background: 'var(--accent)',
+          background: "var(--accent)",
           opacity: 0.04,
-          borderRadius: '50%',
-          filter: 'blur(80px)',
-          pointerEvents: 'none',
+          borderRadius: "50%",
+          filter: "blur(80px)",
+          pointerEvents: "none",
         }}
       />
 
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          width: '100%',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
           maxWidth: 900,
           marginBottom: 32,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{ fontSize: 22, lineHeight: 1 }}>⌨</span>
           <div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em' }}>
+            <div
+              style={{
+                fontSize: 16,
+                fontWeight: 700,
+                color: "#fff",
+                letterSpacing: "-0.02em",
+              }}
+            >
               MechBoard
             </div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', fontWeight: 400 }}>
+            <div
+              style={{
+                fontSize: 11,
+                color: "rgba(255,255,255,0.35)",
+                fontWeight: 400,
+              }}
+            >
               On-screen mechanical keyboard
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <button
             onClick={toggleSound}
-            aria-label={soundEnabled ? 'Mute sound' : 'Enable sound'}
-            title={soundEnabled ? 'Mute sound' : 'Enable sound'}
+            aria-label={soundEnabled ? "Mute sound" : "Enable sound"}
+            title={soundEnabled ? "Mute sound" : "Enable sound"}
             style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.1)',
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.1)",
               borderRadius: 10,
-              color: soundEnabled ? '#fff' : 'rgba(255,255,255,0.3)',
+              color: soundEnabled ? "#fff" : "rgba(255,255,255,0.3)",
               width: 40,
               height: 40,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
               fontSize: 16,
-              transition: 'all 150ms ease',
+              transition: "all 150ms ease",
             }}
           >
-            {soundEnabled ? '🔊' : '🔇'}
+            {soundEnabled ? "🔊" : "🔇"}
           </button>
 
           <button
@@ -91,18 +94,20 @@ function App() {
             aria-label="Open settings"
             aria-expanded={settingsOpen}
             style={{
-              background: settingsOpen ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.1)',
+              background: settingsOpen
+                ? "rgba(255,255,255,0.1)"
+                : "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.1)",
               borderRadius: 10,
-              color: settingsOpen ? '#fff' : 'rgba(255,255,255,0.6)',
+              color: settingsOpen ? "#fff" : "rgba(255,255,255,0.6)",
               width: 40,
               height: 40,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
               fontSize: 16,
-              transition: 'all 150ms ease',
+              transition: "all 150ms ease",
             }}
           >
             ⚙
@@ -112,11 +117,11 @@ function App() {
 
       <div
         style={{
-          width: '100%',
+          width: "100%",
           maxWidth: 900,
-          overflowX: 'auto',
-          display: 'flex',
-          justifyContent: 'center',
+          overflowX: "auto",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <Keyboard />
@@ -126,9 +131,9 @@ function App() {
         style={{
           marginTop: 24,
           fontSize: 12,
-          color: 'rgba(255,255,255,0.2)',
-          textAlign: 'center',
-          letterSpacing: '0.03em',
+          color: "rgba(255,255,255,0.2)",
+          textAlign: "center",
+          letterSpacing: "0.03em",
         }}
       >
         Type on your physical keyboard — or click the keys above
