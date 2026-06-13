@@ -8,30 +8,35 @@
   --accent-dark: hsl(174, 72%, 34%);
   --accent-glow: hsla(174, 72%, 45%, 0.4);
 }
+
 .accent-pink {
   --accent: hsl(330, 80%, 60%);
   --accent-light: hsl(330, 80%, 72%);
   --accent-dark: hsl(330, 80%, 48%);
   --accent-glow: hsla(330, 80%, 60%, 0.4);
 }
+
 .accent-orange {
   --accent: hsl(25, 90%, 55%);
   --accent-light: hsl(25, 90%, 68%);
   --accent-dark: hsl(25, 90%, 42%);
   --accent-glow: hsla(25, 90%, 55%, 0.4);
 }
+
 .accent-purple {
   --accent: hsl(265, 75%, 58%);
   --accent-light: hsl(265, 75%, 70%);
   --accent-dark: hsl(265, 75%, 46%);
   --accent-glow: hsla(265, 75%, 58%, 0.4);
 }
+
 .accent-blue {
   --accent: hsl(210, 85%, 55%);
   --accent-light: hsl(210, 85%, 67%);
   --accent-dark: hsl(210, 85%, 42%);
   --accent-glow: hsla(210, 85%, 55%, 0.4);
 }
+
 .accent-red {
   --accent: hsl(0, 80%, 55%);
   --accent-light: hsl(0, 80%, 67%);
@@ -40,6 +45,7 @@
 }
 
 @layer base {
+
   *,
   *::before,
   *::after {
@@ -80,11 +86,9 @@
   }
 
   .style-mechanical .key-accent {
-    background: linear-gradient(
-      180deg,
-      var(--accent-light) 0%,
-      var(--accent) 70%
-    );
+    background: linear-gradient(180deg,
+        var(--accent-light) 0%,
+        var(--accent) 70%);
     box-shadow:
       0 7px 0 0 var(--accent-dark),
       0 9px 10px -2px rgba(0, 0, 0, 0.55),
@@ -93,16 +97,10 @@
     color: #fff;
   }
 
-  .key-pressed {
-    transform: translateY(6px);
-  }
-
   .key-pressed.key-alpha {
-    background: linear-gradient(
-      180deg,
-      var(--accent-light) 0%,
-      var(--accent) 100%
-    );
+    background: linear-gradient(180deg,
+        var(--accent-light) 0%,
+        var(--accent) 100%);
     box-shadow:
       0 1px 0 0 var(--accent-dark),
       0 2px 4px -1px rgba(0, 0, 0, 0.4),
@@ -112,11 +110,9 @@
   }
 
   .key-pressed.key-modifier {
-    background: linear-gradient(
-      180deg,
-      var(--accent-light) 0%,
-      var(--accent) 100%
-    );
+    background: linear-gradient(180deg,
+        var(--accent-light) 0%,
+        var(--accent) 100%);
     box-shadow:
       0 1px 0 0 var(--accent-dark),
       0 2px 4px -1px rgba(0, 0, 0, 0.5),
@@ -136,6 +132,7 @@
 }
 
 @keyframes accent-pulse {
+
   0%,
   100% {
     box-shadow:
@@ -144,6 +141,7 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.3),
       inset 0 -2px 4px rgba(0, 0, 0, 0.15);
   }
+
   50% {
     box-shadow:
       0 7px 0 0 var(--accent-dark),
@@ -160,9 +158,11 @@
 ::-webkit-scrollbar {
   width: 5px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.12);
   border-radius: 10px;

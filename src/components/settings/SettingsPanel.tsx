@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useKeyboardStore } from "../../store/keyboardStore";
 import { ColorSwatch } from "../ui/ColorSwatch";
 import { Toggle } from "../ui/Toggle";
@@ -125,112 +126,122 @@ export function SettingsPanel() {
   }, [settingsOpen, closeSettings]);
 
   return (
-    <>
-      <div
-        className={cn(
-          "fixed inset-0 z-40 bg-black/0 pointer-events-none transition-all duration-300 backdrop-blur-none",
-          settingsOpen && "bg-black/40 pointer-events-auto backdrop-blur-[2px]"
-        )}
-        onClick={closeSettings}
-        aria-hidden="true"
-      />
-
-      <aside
-        ref={drawerRef}
-        className={cn(
-          "fixed top-0 right-0 z-50 flex h-screen w-[280px] translate-x-full flex-col overflow-y-auto bg-[#1c1c20] px-5 py-6 shadow-[-8px_0_32px_rgba(0,0,0,0.5)] transition-transform duration-300 ease-out border-l border-white/5 outline-none",
-          settingsOpen && "translate-x-0"
-        )}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="settings-title"
-        aria-hidden={!settingsOpen}
-        tabIndex={-1}
-      >
-        <div className="flex items-center justify-between mb-7">
-          <h2
-            id="settings-title"
-            className="m-0 text-base font-bold text-white"
-          >
-            Settings
-          </h2>
-          <button
-            type="button"
+    <AnimatePresence>
+      {settingsOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            key="settings-backdrop"
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-[2px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={closeSettings}
-            aria-label="Close settings"
-            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border-none bg-white/10 text-lg text-white/70 transition-colors duration-150 hover:bg-white/[0.14] hover:text-white"
-          >
-            ×
-          </button>
-        </div>
+            aria-hidden="true"
+          />
 
-        <div className="mb-7">
-          <SectionTitle>Accent Color</SectionTitle>
-          <div className="flex flex-row flex-wrap gap-2">
-            {ACCENT_COLORS.map((c) => (
-              <ColorSwatch
-                key={c}
-                color={c}
-                active={accent === c}
-                onClick={() => setAccent(c)}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-7 h-px bg-white/5" />
-
-        <div className="mb-7">
-          <SectionTitle>Sound</SectionTitle>
-          <div className="mb-4">
-            <Toggle
-              id="sound-toggle"
-              checked={soundEnabled}
-              onChange={toggleSound}
-              label="Enable sound"
-            />
-          </div>
-
-          <div
+          {/* Drawer */}
+          <motion.aside
+            key="settings-drawer"
+            ref={drawerRef}
             className={cn(
-              "flex flex-col gap-1.5 transition-opacity duration-200",
-              !soundEnabled && "opacity-[0.35]"
+              "fixed top-0 right-0 z-50 flex h-screen w-[280px] flex-col overflow-y-auto bg-[#1c1c20] px-5 py-6 shadow-[-8px_0_32px_rgba(0,0,0,0.5)] border-l border-white/5 outline-none"
             )}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 400, damping: 35 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="settings-title"
+            tabIndex={-1}
           >
-            {SOUND_PACKS.map((pack) => {
-              const isActive = soundPack === pack.value;
-              return (
-                <button
-                  key={pack.value}
-                  type="button"
-                  onClick={() => {
-                    if (soundEnabled) setSoundPack(pack.value);
-                  }}
-                  aria-pressed={isActive}
-                  disabled={!soundEnabled}
-                  className={cn(
-                    "flex flex-col gap-0.5 rounded-lg border-[1.5px] px-3.5 py-2.5 text-left transition-all duration-150",
-                    soundEnabled ? "cursor-pointer" : "cursor-default",
-                    isActive
-                      ? "border-[var(--accent)] bg-white/5 text-white"
-                      : "border-white/5 bg-transparent text-white/40 hover:bg-white/[0.02]"
-                  )}
-                >
-                  <span className="text-[12px] font-semibold">
-                    {pack.label}
-                  </span>
-                  <span className="text-[10px] opacity-60">{pack.desc}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+            <div className="flex items-center justify-between mb-7">
+              <h2
+                id="settings-title"
+                className="m-0 text-base font-bold text-white"
+              >
+                Settings
+              </h2>
+              <button
+                type="button"
+                onClick={closeSettings}
+                aria-label="Close settings"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border-none bg-white/10 text-lg text-white/70 transition-colors duration-150 hover:bg-white/[0.14] hover:text-white"
+              >
+                ×
+              </button>
+            </div>
 
-        <div className="mt-auto border-t border-white/5 pt-5 text-center text-[11px] text-white/20">
-          Mechanical Keyboard v1.0
-        </div>
-      </aside>
-    </>
+            <div className="mb-7">
+              <SectionTitle>Accent Color</SectionTitle>
+              <div className="flex flex-row flex-wrap gap-2">
+                {ACCENT_COLORS.map((c) => (
+                  <ColorSwatch
+                    key={c}
+                    color={c}
+                    active={accent === c}
+                    onClick={() => setAccent(c)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-7 h-px bg-white/5" />
+
+            <div className="mb-7">
+              <SectionTitle>Sound</SectionTitle>
+              <div className="mb-4">
+                <Toggle
+                  id="sound-toggle"
+                  checked={soundEnabled}
+                  onChange={toggleSound}
+                  label="Enable sound"
+                />
+              </div>
+
+              <div
+                className={cn(
+                  "flex flex-col gap-1.5 transition-opacity duration-200",
+                  !soundEnabled && "opacity-[0.35]"
+                )}
+              >
+                {SOUND_PACKS.map((pack) => {
+                  const isActive = soundPack === pack.value;
+                  return (
+                    <button
+                      key={pack.value}
+                      type="button"
+                      onClick={() => {
+                        if (soundEnabled) setSoundPack(pack.value);
+                      }}
+                      aria-pressed={isActive}
+                      disabled={!soundEnabled}
+                      className={cn(
+                        "flex flex-col gap-0.5 rounded-lg border-[1.5px] px-3.5 py-2.5 text-left transition-all duration-150",
+                        soundEnabled ? "cursor-pointer" : "cursor-default",
+                        isActive
+                          ? "border-[var(--accent)] bg-white/5 text-white"
+                          : "border-white/5 bg-transparent text-white/40 hover:bg-white/[0.02]"
+                      )}
+                    >
+                      <span className="text-[12px] font-semibold">
+                        {pack.label}
+                      </span>
+                      <span className="text-[10px] opacity-60">{pack.desc}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="mt-auto border-t border-white/5 pt-5 text-center text-[11px] text-white/20">
+              Mechanical Keyboard v1.0
+            </div>
+          </motion.aside>
+        </>
+      )}
+    </AnimatePresence>
   );
 }
-

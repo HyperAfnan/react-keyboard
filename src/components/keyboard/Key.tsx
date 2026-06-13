@@ -1,4 +1,5 @@
-import { memo , type MouseEvent , type TouchEvent, type KeyboardEvent, } from  "react";
+import { memo, type MouseEvent, type TouchEvent, type KeyboardEvent } from "react";
+import { motion } from "framer-motion";
 import type { KeyDef } from "../../types/keyboard";
 import { useKeyboardStore } from "../../store/keyboardStore";
 import { useSoundEngine } from "../../hooks/useSoundEngine";
@@ -22,12 +23,12 @@ function KeyComponent({ keyDef }: KeyProps) {
         : "key-modifier";
 
   const classes = cn(
-    "relative flex h-[44px] shrink-0 cursor-pointer items-center justify-center rounded-[3px] border-none bg-transparent p-0 transition-[transform,box-shadow] duration-[60ms] ease-[cubic-bezier(0.2,0,0.8,1)] [transform-origin:center_bottom] [-webkit-tap-highlight-color:transparent] select-none",
+    "relative flex h-[44px] shrink-0 cursor-pointer items-center justify-center rounded-[3px] border-none bg-transparent p-0 [transform-origin:center_bottom] [-webkit-tap-highlight-color:transparent] select-none",
     variantClass,
     isPressed && "key-pressed"
   );
 
-  const handlePressStart = (e: MouseEvent | TouchEvent ) => {
+  const handlePressStart = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
     pressKey(keyDef.code);
     play(keyDef.code);
@@ -58,13 +59,22 @@ function KeyComponent({ keyDef }: KeyProps) {
   };
 
   return (
-    <div
+    <motion.div
       id={keyDef.id}
       className={classes}
       style={{
         width: keyDef.width,
         height: keyDef.height ?? 44,
         marginLeft: keyDef.marginLeft,
+      }}
+      animate={{
+        y: isPressed ? 6 : 0,
+        scale: isPressed ? 0.98 : 1,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 600,
+        damping: 25,
       }}
       role="button"
       tabIndex={0}
@@ -92,7 +102,7 @@ function KeyComponent({ keyDef }: KeyProps) {
           <span className="text-[10px] font-bold leading-none tracking-[-0.01em]">{keyDef.label}</span>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 
@@ -106,4 +116,3 @@ function getLabelSize(key: KeyDef): string {
 }
 
 export const Key = memo(KeyComponent);
-
