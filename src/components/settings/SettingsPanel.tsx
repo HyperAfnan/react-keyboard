@@ -1,7 +1,9 @@
+import { useEffect, useRef, type ReactNode } from "react";
 import { useKeyboardStore } from "../../store/keyboardStore";
 import { ColorSwatch } from "../ui/ColorSwatch";
 import { Toggle } from "../ui/Toggle";
 import type { AccentColor, SoundPack } from "../../types/keyboard";
+import { cn } from "../../lib/utils";
 
 const ACCENT_COLORS: AccentColor[] = [
   "teal",
@@ -22,24 +24,13 @@ const SOUND_PACKS: { value: SoundPack; label: string; desc: string }[] = [
   { value: "none", label: "Silent", desc: "No sound" },
 ];
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <div
-      style={{
-        fontSize: 10,
-        fontWeight: 700,
-        letterSpacing: "0.1em",
-        textTransform: "uppercase",
-        color: "rgba(255,255,255,0.3)",
-        marginBottom: 10,
-      }}
-    >
+    <div className="text-[10px] font-bold tracking-[0.1em] uppercase text-white/30 mb-2.5">
       {children}
     </div>
   );
 }
-
-import React from "react";
 
 const FOCUSABLE_SELECTOR = [
   "button:not([disabled])",
@@ -69,9 +60,9 @@ export function SettingsPanel() {
   const soundPack = useKeyboardStore((s) => s.soundPack);
   const setSoundPack = useKeyboardStore((s) => s.setSoundPack);
 
-  const drawerRef = React.useRef<HTMLElement>(null);
+  const drawerRef = useRef<HTMLElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!settingsOpen) return;
 
     const drawer = drawerRef.current;
@@ -136,27 +127,30 @@ export function SettingsPanel() {
   return (
     <>
       <div
-        className={`settings-overlay ${settingsOpen ? "open" : ""}`}
+        className={cn(
+          "fixed inset-0 z-40 bg-black/0 pointer-events-none transition-all duration-300 backdrop-blur-none",
+          settingsOpen && "bg-black/40 pointer-events-auto backdrop-blur-[2px]"
+        )}
         onClick={closeSettings}
         aria-hidden="true"
       />
 
       <aside
         ref={drawerRef}
-        className={`settings-drawer ${settingsOpen ? "open" : ""}`}
+        className={cn(
+          "fixed top-0 right-0 z-50 flex h-screen w-[280px] translate-x-full flex-col overflow-y-auto bg-[#1c1c20] px-5 py-6 shadow-[-8px_0_32px_rgba(0,0,0,0.5)] transition-transform duration-300 ease-out border-l border-white/5 outline-none",
+          settingsOpen && "translate-x-0"
+        )}
         role="dialog"
         aria-modal="true"
         aria-labelledby="settings-title"
         aria-hidden={!settingsOpen}
         tabIndex={-1}
       >
-        <div
-          className="flex items-center justify-between"
-          style={{ marginBottom: 28 }}
-        >
+        <div className="flex items-center justify-between mb-7">
           <h2
             id="settings-title"
-            style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#fff" }}
+            className="m-0 text-base font-bold text-white"
           >
             Settings
           </h2>
@@ -164,34 +158,15 @@ export function SettingsPanel() {
             type="button"
             onClick={closeSettings}
             aria-label="Close settings"
-            style={{
-              background: "rgba(255,255,255,0.08)",
-              border: "none",
-              color: "#aaa",
-              width: 32,
-              height: 32,
-              borderRadius: 8,
-              cursor: "pointer",
-              fontSize: 18,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "background 150ms ease",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "rgba(255,255,255,0.14)")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "rgba(255,255,255,0.08)")
-            }
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border-none bg-white/10 text-lg text-white/70 transition-colors duration-150 hover:bg-white/[0.14] hover:text-white"
           >
             ×
           </button>
         </div>
 
-        <div style={{ marginBottom: 28 }}>
+        <div className="mb-7">
           <SectionTitle>Accent Color</SectionTitle>
-          <div className="flex flex-row flex-wrap" style={{ gap: 8 }}>
+          <div className="flex flex-row flex-wrap gap-2">
             {ACCENT_COLORS.map((c) => (
               <ColorSwatch
                 key={c}
@@ -203,17 +178,11 @@ export function SettingsPanel() {
           </div>
         </div>
 
-        <div
-          style={{
-            height: 1,
-            background: "rgba(255,255,255,0.07)",
-            marginBottom: 28,
-          }}
-        />
+        <div className="mb-7 h-px bg-white/5" />
 
-        <div style={{ marginBottom: 28 }}>
+        <div className="mb-7">
           <SectionTitle>Sound</SectionTitle>
-          <div style={{ marginBottom: 16 }}>
+          <div className="mb-4">
             <Toggle
               id="sound-toggle"
               checked={soundEnabled}
@@ -223,66 +192,45 @@ export function SettingsPanel() {
           </div>
 
           <div
-            className="flex flex-col"
-            style={{
-              gap: 6,
-              opacity: soundEnabled ? 1 : 0.35,
-              transition: "opacity 200ms ease",
-            }}
+            className={cn(
+              "flex flex-col gap-1.5 transition-opacity duration-200",
+              !soundEnabled && "opacity-[0.35]"
+            )}
           >
-            {SOUND_PACKS.map((pack) => (
-              <button
-                key={pack.value}
-                onClick={() => {
-                  if (soundEnabled) setSoundPack(pack.value);
-                }}
-                aria-pressed={soundPack === pack.value}
-                disabled={!soundEnabled}
-                style={{
-                  padding: "10px 14px",
-                  borderRadius: 8,
-                  border:
-                    soundPack === pack.value
-                      ? "1.5px solid var(--accent)"
-                      : "1.5px solid rgba(255,255,255,0.08)",
-                  background:
-                    soundPack === pack.value
-                      ? "rgba(255,255,255,0.06)"
-                      : "transparent",
-                  color:
-                    soundPack === pack.value
-                      ? "#fff"
-                      : "rgba(255,255,255,0.45)",
-                  cursor: soundEnabled ? "pointer" : "default",
-                  textAlign: "left",
-                  transition: "all 150ms ease",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                }}
-              >
-                <span style={{ fontSize: 12, fontWeight: 600 }}>
-                  {pack.label}
-                </span>
-                <span style={{ fontSize: 10, opacity: 0.6 }}>{pack.desc}</span>
-              </button>
-            ))}
+            {SOUND_PACKS.map((pack) => {
+              const isActive = soundPack === pack.value;
+              return (
+                <button
+                  key={pack.value}
+                  type="button"
+                  onClick={() => {
+                    if (soundEnabled) setSoundPack(pack.value);
+                  }}
+                  aria-pressed={isActive}
+                  disabled={!soundEnabled}
+                  className={cn(
+                    "flex flex-col gap-0.5 rounded-lg border-[1.5px] px-3.5 py-2.5 text-left transition-all duration-150",
+                    soundEnabled ? "cursor-pointer" : "cursor-default",
+                    isActive
+                      ? "border-[var(--accent)] bg-white/5 text-white"
+                      : "border-white/5 bg-transparent text-white/40 hover:bg-white/[0.02]"
+                  )}
+                >
+                  <span className="text-[12px] font-semibold">
+                    {pack.label}
+                  </span>
+                  <span className="text-[10px] opacity-60">{pack.desc}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        <div
-          style={{
-            marginTop: "auto",
-            paddingTop: 20,
-            borderTop: "1px solid rgba(255,255,255,0.07)",
-            fontSize: 11,
-            color: "rgba(255,255,255,0.2)",
-            textAlign: "center",
-          }}
-        >
+        <div className="mt-auto border-t border-white/5 pt-5 text-center text-[11px] text-white/20">
           Mechanical Keyboard v1.0
         </div>
       </aside>
     </>
   );
 }
+

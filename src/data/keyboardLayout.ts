@@ -518,7 +518,6 @@ export const KEYBOARD_ROWS: KeyRow[] = [
         variant: "alpha",
         width: 40,
       },
-      // Enter is accent (red) on C3 Pro
       {
         id: "key-return",
         code: "Enter",
@@ -621,7 +620,6 @@ export const KEYBOARD_ROWS: KeyRow[] = [
         variant: "alpha",
         width: 40,
       },
-      // RShift is accent (red) on C3 Pro
       {
         id: "key-shiftr",
         code: "ShiftRight",
@@ -669,7 +667,6 @@ export const KEYBOARD_ROWS: KeyRow[] = [
         width: 48,
         centerLabel: true,
       },
-      // Space is accent (red) on C3 Pro
       {
         id: "key-space",
         code: "Space",

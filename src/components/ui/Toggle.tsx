@@ -1,3 +1,5 @@
+import { cn } from "../../lib/utils";
+
 interface ToggleProps {
   checked: boolean;
   onChange: () => void;
@@ -9,8 +11,7 @@ export function Toggle({ checked, onChange, id, label }: ToggleProps) {
   return (
     <label
       htmlFor={id}
-      className="flex cursor-pointer items-center gap-3 select-none"
-      style={{ color: "#a0a0b0" }}
+      className="flex cursor-pointer select-none items-center gap-3 text-[#a0a0b0]"
     >
       <button
         type="button"
@@ -18,33 +19,20 @@ export function Toggle({ checked, onChange, id, label }: ToggleProps) {
         role="switch"
         aria-checked={checked}
         onClick={onChange}
-        style={{
-          width: 40,
-          height: 22,
-          borderRadius: 11,
-          background: checked ? "var(--accent)" : "rgba(255,255,255,0.1)",
-          border: "none",
-          cursor: "pointer",
-          position: "relative",
-          transition: "background 200ms ease",
-          flexShrink: 0,
-        }}
+        className={cn(
+          "relative h-[22px] w-10 shrink-0 cursor-pointer rounded-full border-none transition-colors duration-200",
+          checked ? "bg-[var(--accent)]" : "bg-white/10"
+        )}
       >
         <span
-          style={{
-            position: "absolute",
-            top: 3,
-            left: checked ? 21 : 3,
-            width: 16,
-            height: 16,
-            borderRadius: "50%",
-            background: "#fff",
-            transition: "left 200ms cubic-bezier(0.4, 0, 0.2, 1)",
-            display: "block",
-          }}
+          className={cn(
+            "absolute top-[3px] block h-4 w-4 rounded-full bg-white transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]",
+            checked ? "left-[21px]" : "left-[3px]"
+          )}
         />
       </button>
-      <span style={{ fontSize: 13, fontWeight: 500 }}>{label}</span>
+      <span className="text-[13px] font-medium">{label}</span>
     </label>
   );
 }
+

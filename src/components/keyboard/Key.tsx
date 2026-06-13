@@ -1,7 +1,8 @@
-import React from "react";
+import { memo , type MouseEvent , type TouchEvent, type KeyboardEvent, } from  "react";
 import type { KeyDef } from "../../types/keyboard";
 import { useKeyboardStore } from "../../store/keyboardStore";
 import { useSoundEngine } from "../../hooks/useSoundEngine";
+import { cn } from "../../lib/utils";
 
 interface KeyProps {
   keyDef: KeyDef;
@@ -20,11 +21,13 @@ function KeyComponent({ keyDef }: KeyProps) {
         ? "key-accent"
         : "key-modifier";
 
-  const classes = ["key-base", variantClass, isPressed ? "key-pressed" : ""]
-    .filter(Boolean)
-    .join(" ");
+  const classes = cn(
+    "relative flex h-[44px] shrink-0 cursor-pointer items-center justify-center rounded-[3px] border-none bg-transparent p-0 transition-[transform,box-shadow] duration-[60ms] ease-[cubic-bezier(0.2,0,0.8,1)] [transform-origin:center_bottom] [-webkit-tap-highlight-color:transparent] select-none",
+    variantClass,
+    isPressed && "key-pressed"
+  );
 
-  const handlePressStart = (e: React.MouseEvent | React.TouchEvent) => {
+  const handlePressStart = (e: MouseEvent | TouchEvent ) => {
     e.preventDefault();
     pressKey(keyDef.code);
     play(keyDef.code);
@@ -39,7 +42,7 @@ function KeyComponent({ keyDef }: KeyProps) {
     releaseKey(keyDef.code);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== "Enter" && e.key !== " ") return;
     if (e.repeat) return;
     e.preventDefault();
@@ -47,7 +50,7 @@ function KeyComponent({ keyDef }: KeyProps) {
     play(keyDef.code);
   };
 
-  const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyUp = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== "Enter" && e.key !== " ") return;
     e.preventDefault();
     releaseKey(keyDef.code);
@@ -78,15 +81,15 @@ function KeyComponent({ keyDef }: KeyProps) {
     >
       {keyDef.centerLabel ? (
         <div
-          className="key-label-center"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center font-semibold tracking-[0.01em] lowercase"
           style={{ fontSize: getLabelSize(keyDef) }}
         >
           {keyDef.label}
         </div>
       ) : (
-        <div className="key-label">
-          <span className="key-label-sub">{keyDef.subLabel}</span>
-          <span className="key-label-main">{keyDef.label}</span>
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-start justify-between px-[5px] py-1">
+          <span className="text-[7px] font-semibold leading-none tracking-[0.01em] opacity-60 font-sans">{keyDef.subLabel}</span>
+          <span className="text-[10px] font-bold leading-none tracking-[-0.01em]">{keyDef.label}</span>
         </div>
       )}
     </div>
@@ -102,4 +105,5 @@ function getLabelSize(key: KeyDef): string {
   return "7px";
 }
 
-export const Key = React.memo(KeyComponent);
+export const Key = memo(KeyComponent);
+

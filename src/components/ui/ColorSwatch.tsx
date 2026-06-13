@@ -1,4 +1,5 @@
 import type { AccentColor } from "../../types/keyboard";
+import { cn } from "../../lib/utils";
 
 interface ColorSwatchProps {
   color: AccentColor;
@@ -19,22 +20,19 @@ export function ColorSwatch({ color, active, onClick }: ColorSwatchProps) {
   return (
     <button
       type="button"
-      className="color-swatch"
       onClick={onClick}
       aria-label={`Accent color ${color}`}
       aria-pressed={active}
+      className={cn(
+        "h-7 w-7 shrink-0 cursor-pointer rounded-full border-[3px] transition-[transform,outline] duration-150 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+        active
+          ? "scale-115 border-white outline-2 outline-white/30"
+          : "scale-100 border-transparent outline-none"
+      )}
       style={{
-        width: 28,
-        height: 28,
-        borderRadius: "50%",
         background: COLOR_MAP[color],
-        border: active ? "3px solid white" : "3px solid transparent",
-        outline: active ? "2px solid rgba(255,255,255,0.3)" : undefined,
-        cursor: "pointer",
-        transition: "transform 150ms ease, outline 150ms ease",
-        transform: active ? "scale(1.15)" : "scale(1)",
-        flexShrink: 0,
       }}
     />
   );
 }
+

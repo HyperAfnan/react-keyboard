@@ -1,6 +1,7 @@
 import { Keyboard } from "./components/keyboard/Keyboard";
 import { SettingsPanel } from "./components/settings/SettingsPanel";
 import { useKeyboardStore } from "./store/keyboardStore";
+import { cn } from "./lib/utils";
 
 function App() {
   const toggleSettings = useKeyboardStore((s) => s.toggleSettings);
@@ -11,80 +12,35 @@ function App() {
 
   return (
     <div
-      className={`accent-${accent} relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_50%_30%,_#1a1a22_0%,_#0a0a0c_70%)] p-5`}
+      className={cn(
+        `accent-${accent}`,
+        "relative flex min-h-screen flex-col items-center justify-center overflow-hidden p-5",
+        "bg-[radial-gradient(ellipse_at_50%_30%,_#1a1a22_0%,_#0a0a0c_70%)]"
+      )}
     >
       <div
         aria-hidden="true"
-        className=""
-        style={{
-          position: "absolute",
-          top: "20%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 600,
-          height: 200,
-          background: "var(--accent)",
-          opacity: 0.04,
-          borderRadius: "50%",
-          filter: "blur(80px)",
-          pointerEvents: "none",
-        }}
+        className="pointer-events-none absolute left-1/2 top-[20%] h-[200px] w-[600px] -translate-x-1/2 rounded-full bg-[var(--accent)] opacity-[0.04] blur-[80px]"
       />
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-          maxWidth: 900,
-          marginBottom: 32,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontSize: 22, lineHeight: 1 }}>⌨</span>
+      <div className="mb-8 flex w-full max-w-[900px] items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <span className="text-[22px] leading-none">⌨</span>
           <div>
-            <div
-              style={{
-                fontSize: 16,
-                fontWeight: 700,
-                color: "#fff",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              MechBoard
-            </div>
-            <div
-              style={{
-                fontSize: 11,
-                color: "rgba(255,255,255,0.35)",
-                fontWeight: 400,
-              }}
-            >
-              On-screen mechanical keyboard
-            </div>
+            <div className="text-base font-bold tracking-tight text-white">MechBoard</div>
+            <div className="text-[11px] font-normal text-white/35">On-screen mechanical keyboard</div>
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div className="flex items-center gap-2">
           <button
             onClick={toggleSound}
             aria-label={soundEnabled ? "Mute sound" : "Enable sound"}
             title={soundEnabled ? "Mute sound" : "Enable sound"}
-            style={{
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 10,
-              color: soundEnabled ? "#fff" : "rgba(255,255,255,0.3)",
-              width: 40,
-              height: 40,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              fontSize: 16,
-              transition: "all 150ms ease",
-            }}
+            className={cn(
+              "flex h-10 w-10 cursor-pointer items-center justify-center rounded-[10px] border border-white/10 bg-white/5 text-base transition-all duration-150 hover:bg-white/10 hover:text-white",
+              soundEnabled ? "text-white" : "text-white/30"
+            )}
           >
             {soundEnabled ? "🔊" : "🔇"}
           </button>
@@ -93,49 +49,21 @@ function App() {
             onClick={toggleSettings}
             aria-label="Open settings"
             aria-expanded={settingsOpen}
-            style={{
-              background: settingsOpen
-                ? "rgba(255,255,255,0.1)"
-                : "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 10,
-              color: settingsOpen ? "#fff" : "rgba(255,255,255,0.6)",
-              width: 40,
-              height: 40,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              fontSize: 16,
-              transition: "all 150ms ease",
-            }}
+            className={cn(
+              "flex h-10 w-10 cursor-pointer items-center justify-center rounded-[10px] border border-white/10 text-base transition-all duration-150 hover:bg-white/10 hover:text-white",
+              settingsOpen ? "bg-white/10 text-white" : "bg-white/5 text-white/60"
+            )}
           >
             ⚙
           </button>
         </div>
       </div>
 
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 900,
-          overflowX: "auto",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div className="flex w-full max-w-[900px] justify-center overflow-x-auto">
         <Keyboard />
       </div>
 
-      <div
-        style={{
-          marginTop: 24,
-          fontSize: 12,
-          color: "rgba(255,255,255,0.2)",
-          textAlign: "center",
-          letterSpacing: "0.03em",
-        }}
-      >
+      <div className="mt-6 text-center text-[12px] tracking-wide text-white/20">
         Type on your physical keyboard — or click the keys above
       </div>
 
@@ -145,3 +73,4 @@ function App() {
 }
 
 export default App;
+
