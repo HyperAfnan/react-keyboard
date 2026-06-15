@@ -10,18 +10,7 @@ export function useKeyPress(
 
   useEffect(() => {
     const handleDown = (e: KeyboardEvent) => {
-      if (e.repeat) return;
-      if (e.ctrlKey || e.metaKey) return;
-      if (e.code.startsWith("F") && e.code.length <= 3) return;
-
-      if (
-        ["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(
-          e.code,
-        )
-      ) {
-        e.preventDefault();
-      }
-
+      e.preventDefault();
       pressKey(e.code);
       play(e.code);
     };
