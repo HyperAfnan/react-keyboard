@@ -33,8 +33,8 @@ export function KeyboardLayout() {
         </div>
       ) : (
         <div className="inline-block select-none rounded-[10px] bg-[#1a1a1c] px-3.5 pb-4 pt-3 shadow-[0_30px_70px_rgba(0,0,0,0.85),0_0_0_2px_rgba(255,255,255,0.03),inset_0_1px_0_rgba(255,255,255,0.04)]">
-          <div className="w-[776px] rounded-md bg-[#111113] px-2 pb-2.5 pt-2 shadow-[inset_0_4px_10px_rgba(0,0,0,0.9),inset_0_0_0_1px_rgba(0,0,0,0.8)]">
-            <div className="flex flex-col gap-1">
+          <div className="w-[792px] rounded-md bg-[#0f0f11] px-2 pb-2.5 pt-2 shadow-[inset_0_4px_10px_rgba(0,0,0,0.9),inset_0_0_0_1px_rgba(0,0,0,0.8)]">
+            <div className="flex flex-col gap-[5px]">
               {rows.map((row) => (
                 <KeyboardRow key={row.id} row={row} />
               ))}

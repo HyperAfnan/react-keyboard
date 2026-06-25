@@ -41,7 +41,7 @@ export const KeyboardRow = memo(function KeyboardRow({
 
   return (
     <div
-      className={cn("flex flex-row", isApple ? "gap-[4px]" : "gap-1")}
+      className={cn("flex flex-row", isApple ? "gap-[4px]" : "gap-[5px]")}
       style={{ marginLeft: row.offsetLeft ?? 0 }}
       role="group"
       aria-label={`Keyboard row ${row.id}`}

@@ -53,7 +53,7 @@
   .style-mechanical .key-alpha {
     background: linear-gradient(180deg, #3a3a3e 0%, #2e2e32 60%, #282829 100%);
     box-shadow:
-      0 7px 0 0 #0d0d0f,
+      0 7px 0 0 #1b1b1d,
       0 9px 10px -2px rgba(0, 0, 0, 0.7),
       inset 0 1px 0 rgba(255, 255, 255, 0.08),
       inset 0 -2px 4px rgba(0, 0, 0, 0.3);
@@ -63,7 +63,7 @@
   .style-mechanical .key-modifier {
     background: linear-gradient(180deg, #353538 0%, #2a2a2d 60%, #242426 100%);
     box-shadow:
-      0 7px 0 0 #0a0a0c,
+      0 7px 0 0 #151517,
       0 9px 10px -2px rgba(0, 0, 0, 0.75),
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
       inset 0 -2px 4px rgba(0, 0, 0, 0.35);
@@ -83,62 +83,36 @@
   }
 
   .key-pressed.key-alpha {
-    background: linear-gradient(180deg,
-        var(--accent-light) 0%,
-        var(--accent) 100%);
+    background: linear-gradient(180deg, #222225 0%, #1a1a1c 100%);
     box-shadow:
-      0 1px 0 0 var(--accent-dark),
+      0 1px 0 0 #101012,
       0 2px 4px -1px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      inset 0 2px 6px rgba(0, 0, 0, 0.15);
-    color: #fff;
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    color: #a8a8aa !important;
   }
 
   .key-pressed.key-modifier {
-    background: linear-gradient(180deg,
-        var(--accent-light) 0%,
-        var(--accent) 100%);
+    background: linear-gradient(180deg, #1d1d1f 0%, #161618 100%);
     box-shadow:
-      0 1px 0 0 var(--accent-dark),
+      0 1px 0 0 #0e0e10,
       0 2px 4px -1px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 2px 6px rgba(0, 0, 0, 0.2);
-    color: #fff;
+      inset 0 1px 0 rgba(255, 255, 255, 0.02),
+      inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    color: #88888a !important;
   }
 
   .key-pressed.key-accent {
-    background: var(--accent-dark);
+    background: var(--accent-dark) !important;
     box-shadow:
       0 1px 0 0 rgba(0, 0, 0, 0.6),
       0 2px 4px rgba(0, 0, 0, 0.4),
-      inset 0 2px 6px rgba(0, 0, 0, 0.2);
-    color: #fff;
+      inset 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+    color: #fff !important;
   }
 }
 
-@keyframes accent-pulse {
 
-  0%,
-  100% {
-    box-shadow:
-      0 7px 0 0 var(--accent-dark),
-      0 9px 10px -2px rgba(0, 0, 0, 0.55),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      inset 0 -2px 4px rgba(0, 0, 0, 0.15);
-  }
-
-  50% {
-    box-shadow:
-      0 7px 0 0 var(--accent-dark),
-      0 9px 20px 2px var(--accent-glow),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      inset 0 -2px 4px rgba(0, 0, 0, 0.15);
-  }
-}
-
-.key-accent:not(.key-pressed) {
-  animation: accent-pulse 3s ease-in-out infinite;
-}
 
 .style-magic .key-alpha {
   background: #1c1c1e;

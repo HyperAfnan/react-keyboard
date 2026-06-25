@@ -93,7 +93,7 @@ function KeyComponent({ keyDef }: KeyProps) {
         : "key-modifier";
 
   const classes = cn(
-    "relative flex h-[44px] shrink-0 cursor-pointer items-center justify-center rounded-[3px] border-none bg-transparent p-0 [transform-origin:center_bottom] [-webkit-tap-highlight-color:transparent] select-none",
+    "relative flex h-[44px] shrink-0 cursor-pointer items-center justify-center rounded-[3px] border-none p-0 [transform-origin:center_bottom] [-webkit-tap-highlight-color:transparent] select-none",
     variantClass,
     isPressed && "key-pressed",
     appleCornerClass
