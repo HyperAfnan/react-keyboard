@@ -1,8 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 @layer base {
-
   *,
   *::before,
   *::after {
@@ -10,7 +9,10 @@
   }
 
   html {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Geist", system-ui, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -19,9 +21,15 @@
     min-height: 100vh;
     @apply bg-[#0a0a0c];
   }
+
+  .font-geist {
+      font-family: "Geist", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-style: normal;
+  }
 }
 
-/* Accent color vars for the demo wrapper */
 :root,
 .accent-teal {
   --accent: hsl(174, 72%, 45%);
@@ -65,7 +73,6 @@
   --accent-glow: hsla(0, 80%, 55%, 0.4);
 }
 
-/* Settings drawer CSS transitions (replacing framer-motion) */
 .settings-backdrop {
   opacity: 0;
   transition: opacity 0.3s ease-out;
@@ -97,4 +104,86 @@
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.12);
   border-radius: 10px;
+}
+
+@theme {
+  --animate-start: start 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-in: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes start {
+    0% {
+      transform: translateY(20px) scale(0.9);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Custom 3D Keycap Logo Styles */
+.keycap-logo-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Geist Mono", monospace;
+  font-weight: 800;
+  text-transform: uppercase;
+  user-select: none;
+  transition: all 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Alpha Dark Keycap (R) */
+.keycap-logo-r {
+  background: linear-gradient(180deg, #3a3a3e 0%, #2e2e32 60%, #282829 100%);
+  box-shadow:
+    0 3px 0 0 #0d0d0f,
+    0 4px 6px -1px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.3);
+  color: #e4e4e7;
+}
+
+/* Accent Highlight Keycap (K) */
+.keycap-logo-k {
+  background: linear-gradient(180deg, var(--accent-light) 0%, var(--accent) 70%);
+  box-shadow:
+    0 3px 0 0 var(--accent-dark),
+    0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.15);
+  color: #ffffff;
+}
+
+/* Keycap Press Physics on Hover/Active */
+.logo-hover-group:hover .keycap-logo-r,
+.logo-hover-group:active .keycap-logo-r {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 0 #0d0d0f,
+    0 2px 3px -1px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.logo-hover-group:hover .keycap-logo-k,
+.logo-hover-group:active .keycap-logo-k {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 0 var(--accent-dark),
+    0 2px 3px -1px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.15);
 }
