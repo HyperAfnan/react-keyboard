@@ -1,8 +1,13 @@
 {
   "name": "react-keyboards",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
   "description": "A premium on-screen mechanical keyboard React component with realistic key animations and sound profiles.",
+  "homepage": "https://react-keyboards.mohammadafnan.tech/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HyperAfnan/react-keyboard.git"
+  },
   "main": "dist/react-keyboards.umd.cjs",
   "module": "dist/react-keyboards.js",
   "types": "dist/lib/main.d.ts",
