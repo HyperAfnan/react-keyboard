@@ -13,6 +13,23 @@ function App() {
 
   return (
     <div className={`flex min-h-screen flex-col font-geist overflow-x-hidden bg-zinc-950 font-sans text-white select-none accent-${accent}`}>
+      <title>React Keyboards</title>
+      <meta name="description" content="A simple yet powerful keyboard components for react with multiple key sounds" />
+      <meta name="keywords" content="react, keyboard, mechanical keyboard, virtual keyboard, interactive, cherry mx, web audio, react-keyboards" />
+      <meta name="author" content="Mohammad Afnan" />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://react-keyboards.mohammadafnan.tech/" />
+      <meta property="og:title" content="React Keyboards" />
+      <meta property="og:description" content="A simple yet powerful keyboard components for react with multiple key sounds" />
+      <meta property="og:image" content="https://react-keyboards.mohammadafnan.tech/og-image.png" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content="https://react-keyboards.mohammadafnan.tech/" />
+      <meta name="twitter:title" content="React Keyboards" />
+      <meta name="twitter:description" content="A simple yet powerful keyboard components for react with multiple key sounds" />
+      <meta name="twitter:image" content="https://react-keyboards.mohammadafnan.tech/og-image.png" />
+
       <Header />
 
       <div className="mx-auto w-full max-w-[96rem] flex-1 flex flex-col border-b border-zinc-800/80 2xl:border-x">
